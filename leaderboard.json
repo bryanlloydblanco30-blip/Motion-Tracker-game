@@ -1,0 +1,226 @@
+[
+  {
+    "player": "Bryan",
+    "guide": "Aquarius",
+    "guide_symbol": "♒",
+    "pct": 92,
+    "grade": "S",
+    "timestamp": "2026-08-13 22:54"
+  },
+  {
+    "player": "Bryan",
+    "level": 1,
+    "guide": "Aries",
+    "pct": 96,
+    "grade": "S",
+    "timestamp": "2026-08-13 22:58"
+  },
+  {
+    "player": "as",
+    "level": 1,
+    "guide": "Aries",
+    "pct": 93,
+    "grade": "S",
+    "timestamp": "2026-08-13 23:03"
+  },
+  {
+    "player": "as",
+    "level": 2,
+    "guide": "Taurus",
+    "pct": 92,
+    "grade": "S",
+    "timestamp": "2026-08-13 23:03"
+  },
+  {
+    "player": "as",
+    "level": 2,
+    "guide": "Taurus",
+    "pct": 95,
+    "grade": "S",
+    "timestamp": "2026-08-13 23:03"
+  },
+  {
+    "player": "as",
+    "level": 3,
+    "guide": "Gemini",
+    "pct": 90,
+    "grade": "S",
+    "timestamp": "2026-08-13 23:05"
+  },
+  {
+    "player": "as",
+    "level": 3,
+    "guide": "Gemini",
+    "pct": 94,
+    "grade": "S",
+    "timestamp": "2026-08-13 23:05"
+  },
+  {
+    "player": "as",
+    "level": 4,
+    "guide": "Cancer",
+    "pct": 86,
+    "grade": "A",
+    "timestamp": "2026-08-13 23:08"
+  },
+  {
+    "player": "as",
+    "level": 4,
+    "guide": "Cancer",
+    "pct": 90,
+    "grade": "S",
+    "timestamp": "2026-08-13 23:10"
+  },
+  {
+    "player": "as",
+    "level": 4,
+    "guide": "Cancer",
+    "pct": 91,
+    "grade": "S",
+    "timestamp": "2026-08-13 23:10"
+  },
+  {
+    "player": "as",
+    "level": 4,
+    "guide": "Cancer",
+    "pct": 94,
+    "grade": "S",
+    "timestamp": "2026-08-13 23:10"
+  },
+  {
+    "player": "aa",
+    "level": 1,
+    "guide": "Aries",
+    "pct": 90,
+    "grade": "S",
+    "timestamp": "2026-08-13 23:11"
+  },
+  {
+    "player": "aa",
+    "level": 1,
+    "guide": "Aries",
+    "pct": 98,
+    "grade": "S",
+    "timestamp": "2026-08-15 00:42"
+  },
+  {
+    "player": "aa",
+    "level": 2,
+    "guide": "Taurus",
+    "pct": 100,
+    "grade": "S",
+    "timestamp": "2026-08-15 00:44"
+  },
+  {
+    "player": "aa",
+    "level": 3,
+    "guide": "Gemini",
+    "pct": 77,
+    "grade": "A",
+    "timestamp": "2026-08-15 00:44"
+  },
+  {
+    "player": "aa",
+    "level": 4,
+    "guide": "Cancer",
+    "pct": 100,
+    "grade": "S",
+    "timestamp": "2026-08-15 00:45"
+  },
+  {
+    "player": "aa",
+    "level": 5,
+    "guide": "Leo",
+    "pct": 99,
+    "grade": "S",
+    "timestamp": "2026-08-15 00:46"
+  },
+  {
+    "player": "New",
+    "level": 1,
+    "guide": "Aries",
+    "pct": 98,
+    "grade": "S",
+    "timestamp": "2026-08-15 00:52"
+  },
+  {
+    "player": "New",
+    "level": 2,
+    "guide": "Taurus",
+    "pct": 78,
+    "grade": "A",
+    "timestamp": "2026-08-15 00:53"
+  },
+  {
+    "player": "a",
+    "level": 1,
+    "guide": "Aries",
+    "pct": 97,
+    "grade": "S",
+    "timestamp": "2026-08-15 00:55"
+  },
+  {
+    "player": "a",
+    "level": 2,
+    "guide": "Taurus",
+    "pct": 100,
+    "grade": "S",
+    "timestamp": "2026-08-15 00:56"
+  },
+  {
+    "player": "r",
+    "level": 1,
+    "guide": "Aries",
+    "pct": 100,
+    "grade": "S",
+    "timestamp": "2026-08-15 00:56"
+  },
+  {
+    "player": "r",
+    "level": 2,
+    "guide": "Taurus",
+    "pct": 100,
+    "grade": "S",
+    "timestamp": "2026-08-15 00:56"
+  },
+  {
+    "player": "r",
+    "level": 3,
+    "guide": "Gemini",
+    "pct": 100,
+    "grade": "S",
+    "timestamp": "2026-08-15 00:57"
+  },
+  {
+    "player": "r",
+    "level": 4,
+    "guide": "Cancer",
+    "pct": 100,
+    "grade": "S",
+    "timestamp": "2026-08-15 00:57"
+  },
+  {
+    "player": "r",
+    "level": 5,
+    "guide": "Leo",
+    "pct": 100,
+    "grade": "S",
+    "timestamp": "2026-08-15 00:57"
+  },
+  {
+    "player": "s",
+    "level": 1,
+    "guide": "Aries",
+    "pct": 98,
+    "grade": "S",
+    "timestamp": "2026-08-16 00:48"
+  },
+  {
+    "player": "s",
+    "level": 2,
+    "guide": "Taurus",
+    "pct": 58,
+    "grade": "B",
+    "timestamp": "2026-08-16 00:53"
+  }
+]

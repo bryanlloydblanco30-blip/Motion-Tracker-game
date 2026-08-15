@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Astral Cartographer</title>
+<meta name="description" content="Draw your own constellation using hand tracking. Point to move the cursor, pinch to place a star.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='85'>✦</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<!-- MediaPipe Hands - hand landmark detection model -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div id="stage">
+  <video id="cam" autoplay playsinline muted></video>
+  <div id="vignette"></div>
+  <canvas id="overlay"></canvas>
+
+  <header>
+    <div class="eyebrow">Astral Cartographer</div>
+    <h1>Chart the Sky Within Reach</h1>
+  </header>
+
+  <!-- Dedicated Prominent Stage Timer Badge -->
+  <div id="timerBadge">
+    <div class="tb-label">STAGE TIMER</div>
+    <div class="tb-val" id="rdTimer">01:00</div>
+  </div>
+
+  <div id="readout">
+    ALT <span id="rdAlt">--.-&deg;</span><br>
+    AZ  <span id="rdAz">---.-°</span><br>
+    STARS <span id="rdCount">0</span>
+  </div>
+
+  <div id="zodiacBar"></div>
+  <div id="zLabel">&nbsp;</div>
+
+  <div id="toast"></div>
+
+  <!-- Accuracy Meter -->
+  <div id="accuracyPanel">
+    <div class="acc-label">CONSTELLATION ACCURACY</div>
+    <div class="acc-score-row">
+      <span class="acc-pct" id="accPct">--</span><span class="acc-unit">%</span>
+      <span class="acc-grade" id="accGrade">-</span>
+    </div>
+    <div class="acc-bar-wrap"><div class="acc-bar" id="accBar"></div></div>
+    <div class="acc-detail">
+      <span id="accMatched">0</span> / <span id="accTotal">-</span> stars matched
+    </div>
+    <div class="acc-submetrics">
+      <div class="submetric"><span>STAR POS</span><b id="accPosScore">0%</b></div>
+      <div class="submetric"><span>SHAPE FORM</span><b id="accShapeScore">0%</b></div>
+    </div>
+  </div>
+
+  <!-- 3-2-1-GO Stage Countdown Overlay -->
+  <div id="countdownOverlay" class="modal-overlay">
+    <div class="countdown-card">
+      <div id="countdownNum">3</div>
+      <div id="countdownText">GET READY</div>
+    </div>
+  </div>
+
+  <div id="dock">
+    <div id="hint">&#9757; point &bull; pinch to place star &bull; or tap sky</div>
+    <div class="ring">
+      <button class="dockbtn" id="btnTrack"><span class="ic">&#9678;</span><span class="lb">Track</span></button>
+      <button class="dockbtn" id="btnUndo"><span class="ic">&#8634;</span><span class="lb">Undo</span></button>
+      <button class="dockbtn" id="btnClear"><span class="ic">&#10005;</span><span class="lb">Clear</span></button>
+      <button class="dockbtn" id="btnGuide"><span class="ic">&#9741;</span><span class="lb">Guide</span></button>
+      <button class="dockbtn" id="btnLeaderboard"><span class="ic">&#9733;</span><span class="lb">Ranks</span></button>
+      <button class="dockbtn primary" id="btnSave"><span class="ic">&#8681;</span><span class="lb">Save</span></button>
+    </div>
+  </div>
+
+  <div id="intro">
+    <div class="card">
+      <div class="glyph">&#10022; &#10023; &#10022;</div>
+      <h2>Draw your own constellation</h2>
+      <p>
+        Allow your camera, then <b>tap anywhere</b> on the sky to place stars.
+        Enable <b>Track</b>, then <b>point your index finger</b> to aim the
+        cursor &mdash; <b>pinch</b> to plant a star hands-free. Trace zodiac guides to earn scores on the Leaderboard!
+      </p>
+
+      <div class="player-input-wrap">
+        <label for="playerNameInput">ENTRANT NAME</label>
+        <input type="text" id="playerNameInput" placeholder="Stargazer" maxlength="16" autocomplete="off">
+      </div>
+
+      <button id="startBtn">Begin Charting</button>
+      <div id="camError">Camera access was denied. Check your browser&apos;s site settings and reload.</div>
+    </div>
+  </div>
+
+  <!-- Leaderboard Modal -->
+  <div id="leaderboardModal" class="modal-overlay">
+    <div class="card leaderboard-card">
+      <div class="glyph">&#9733; &#10022; &#9733;</div>
+      <h2>Hall of Stargazers</h2>
+      <p class="modal-sub">Top constellation accuracy records</p>
+      
+      <div class="leaderboard-table-wrap">
+        <table id="leaderboardTable">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>PLAYER</th>
+              <th>CLEARED</th>
+              <th>TOTAL SCORE</th>
+            </tr>
+          </thead>
+          <tbody id="leaderboardBody">
+            <!-- Dynamic rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <button id="closeLeaderboardBtn" class="secondary-btn">Close</button>
+    </div>
+  </div>
+
+  <!-- Level Completion Modal -->
+  <div id="levelCompleteModal" class="modal-overlay">
+    <div class="card completion-card">
+      <div class="glyph">&#10022; &#9733; &#10022;</div>
+      <h2 id="modalLevelTitle">LEVEL CLEARED!</h2>
+      <p class="modal-sub" id="modalLevelSub">Shape comparison complete</p>
+
+      <div class="completion-score-box">
+        <div class="modal-grade" id="modalGrade">S</div>
+        <div class="modal-pct-wrap">
+          <span class="modal-pct" id="modalPct">95</span><span class="modal-unit">% ACCURACY</span>
+        </div>
+      </div>
+
+      <div class="completion-metrics">
+        <div class="metric-row">
+          <span>Star Position Score</span>
+          <b id="modalPosScore">96%</b>
+        </div>
+        <div class="metric-row">
+          <span>Shape Form Alignment</span>
+          <b id="modalShapeScore">94%</b>
+        </div>
+        <div class="metric-row">
+          <span>Stars Matched</span>
+          <b id="modalMatchedStars">5 / 5</b>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button id="btnNextLevel" class="primary-modal-btn">Next Level &#8594;</button>
+        <button id="btnRetryLevel" class="secondary-btn">Try Again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
